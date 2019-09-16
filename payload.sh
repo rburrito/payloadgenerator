@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 echo "What is the operating system of your target? Example: windows, linux, osx"
 
 read OS
@@ -50,37 +51,43 @@ echo "What would you like the file format to be? Example: exe, raw, pl, rb, c"
 
 read format
 
+payload=""
+
 case  $meterpreter  in
-    y)
-    echo "You will be creating a Meterpreter $shell shell payload for $architecture bit $OS in $format format."
+	y)
+	echo "You are using meterpreter."
+	payload="$OS/meterpreter/$arc"
+	
         ;;
-    n)
-    echo "You will be creating a $shell shell payload for $architecture bit $OS in $format format."
+	n)
+	echo "You are not using meterpreter."
+	payload="$OS/$arc"
         ;;
-    *)
+	*)
 esac
 
 msfgen=""
 
-case  OS  in
+case  $OS  in
 	windows)
-		echo "You will be creating a Meterpreter $shell shell payload for $architecture bit $OS in $format format."
-		msfgen="${OS}/shell_${shell}"
-		echo "msfvenom -p ${msfgen}"
+		echo "You will be creating a $shell shell payload for $architecture bit $OS in $format format."
+		msfgen="$payload/shell_$shell"
 
         ;;
+
 	linux)
     		echo "You will be creating a $shell shell payload for $architecture bit $OS in $format format."
-		msfgen="${OS}/${arc}/shell_${shell}"
-		echo "msfvenom -p ${msfgen}"
+		msfgen="$payload/shell_${shell}"
         ;;
-	mac)
+
+	osx)
 		echo "You will be creating a $shell shell payload for $architecture bit $OS in $format format."
-		msfgen="${OS}/${arc}/shell_${shell}"
-		echo "msfvenom -p ${msfgen}"
+		msfgen="$payload/shell_${shell}"
         ;;
 
 	*)
+
 esac
+
 
 echo "msfvenom -p ${msfgen}"
