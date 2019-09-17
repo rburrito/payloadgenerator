@@ -88,11 +88,6 @@ case  $OS in
 	linux|windows)
 		meterpreter_question
 	;;
-  
-	windows)
-		meterpreter_question
-	;;
-
 
 	osx)
 		meterpreter='n'
@@ -100,12 +95,10 @@ case  $OS in
 esac
 }
 
-
 echo "Would you like your payload staged or stageless? Please indicate 1 for staged and 2 for stageless"
 read stage
 
 stage_symbol=""
-
 
 case $stage in
 	1)
@@ -116,20 +109,17 @@ case $stage in
 	;;
 esac
 
-
 case $architecture in
 	32)
 		arc="/x86"
 		no_arc_display
 		linux_x86_meterpreter
 	;;
-
 	64)
 		arc="/x64"
 		meterpreter_question
 	;;
 esac
-
 
 echo "Would you like to generate a bind shell or reverse shell? Please enter bind or reverse."
 read shell
@@ -152,8 +142,6 @@ while [ "${correct_shell}" = "false" ];
 do
         validate_shell;
 done
-
-
 
 ip_port=""
 case $shell in
