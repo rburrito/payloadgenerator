@@ -1,8 +1,8 @@
 #!/bin/bash
 
+
 echo "What is the operating system of your target? Example: windows, linux, osx"
 read OS
-
 
 echo "Is it 64 bit or 32? Please type 32 or 64."
 read architecture
@@ -57,6 +57,9 @@ case  $OS  in
                 msfgen="$payload/${shell}_tcp"
         ;;
 
+
+
+
         osx)
                 echo "You will be creating a $shell shell payload for $architecture bit $OS in $format format."
                 msfgen="$payload/${shell}_tcp"
@@ -66,6 +69,8 @@ case  $OS  in
 
 esac
 }
+
+
 
 
 no_meterpreter() {
@@ -83,6 +88,8 @@ case  $OS  in
         osx)
                 echo "You will be creating a $shell shell payload for $architecture bit $OS in $format format."
                 msfgen="$payload${shell}_tcp"
+
+
         ;;
         *)
 
@@ -102,6 +109,8 @@ case  $meterpreter  in
 	no_meterpreter
         ;;
 	*)
+
 esac
+
 
 echo "msfvenom -p ${msfgen}"
