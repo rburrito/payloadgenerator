@@ -88,6 +88,12 @@ case  $OS in
 	linux|windows)
 		meterpreter_question
 	;;
+  
+	windows)
+		meterpreter_question
+	;;
+
+
 	osx)
 		meterpreter='n'
 	;;
@@ -97,28 +103,6 @@ esac
 
 echo "Would you like your payload staged or stageless? Please indicate 1 for staged and 2 for stageless"
 read stage
-
-
-correct_stage="false"
-
-validate_stage() {
-case $stage in
-        1|2)
-        correct_stage="true"
-        ;;
-        *)
-        echo "$stage is not one of the options. Please choose 1 for staged or 2 for stageless."
-        read stage
-        ;;
-esac
-}
-
-while [ "${correct_stage}" = "false" ];
-do
-        validate_stage;
-done
-
-
 
 stage_symbol=""
 
