@@ -74,7 +74,6 @@ while [ "${correct_meterpreter}" = "false" ];
 do
         validate_meterpreter;
 done
-
 }
 
 linux_x86_meterpreter(){
