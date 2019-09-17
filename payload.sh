@@ -16,16 +16,35 @@ case $OS in
 esac
 }
 
+meterpreter_question(){
+echo "Would you like to use meterpreter? Please indicate y for yes and n for no."
+read meterpreter
+}
+
+linux_x86_meterpreter(){
+case  $OS in
+	linux)
+		meterpreter_question
+	;;
+	windows)
+		meterpreter='n'
+	;;
+	osx)
+		meterpreter='n'
+	;;
+esac
+}
 
 case $architecture in
 	32)
 		arc="/x86"
 		no_arc_display
+		linux_x86_meterpreter
 	;;
 
 	64)
 		arc="/x64"
-}
+		meterpreter_question
 
 	;;
 esac
@@ -49,10 +68,10 @@ case $shell in
     ;;
 esac
 
-
-echo "Would you like to use meterpreter? Please indicate y for yes and n for no."
-read meterpreter
-
+#meterpreter_question(){
+#echo "Would you like to use meterpreter? Please indicate y for yes and n for no."
+#read meterpreter
+#}
 
 echo "What would you like the file format to be? Example: exe, raw, pl, rb, c"
 read format
