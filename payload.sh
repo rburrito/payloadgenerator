@@ -31,7 +31,6 @@ case $architecture in
 esac
 
 
-
 echo "Would you like to generate a bind shell or reverse shell? Please enter bind or reverse."
 read shell
 
