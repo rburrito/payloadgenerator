@@ -185,7 +185,6 @@ case $shell in
         read port
 	check_port
 	find_correct_port
-
 	ip_port="LHOST=$ip LPORT=$port"
     ;;
   bind)
