@@ -32,7 +32,6 @@ esac
 }
 
 validate_arc
-
 #Sets arc to "" for Windows 32 bit.
 no_arc_display(){
 case $OS in
@@ -165,12 +164,8 @@ do
 	check_port;
 done
 }
-<<<<<<< HEAD
 
 #Case questions for users that want bind or reverse shells
-=======
-#############################################################################
->>>>>>> c202b559235f9c84538399e0b57caaa6eaac626c
 ip_port=""
 
 case $shell in
