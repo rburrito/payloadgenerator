@@ -165,12 +165,9 @@ do
 	check_port;
 done
 }
-<<<<<<< HEAD
+
 
 #Case questions for users that want bind or reverse shells
-=======
-#############################################################################
->>>>>>> c202b559235f9c84538399e0b57caaa6eaac626c
 ip_port=""
 
 case $shell in
