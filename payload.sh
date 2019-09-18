@@ -155,9 +155,14 @@ do
 done
 
 correct_ip="false"
+<<<<<<< HEAD
 octet="(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])"
 check_ip(){
     if [[ $ip =~ ^$octet.$octet.$octet.$octet$ ]];
+=======
+check_ip(){
+if [[ $ip =~ (25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?) ]];
+>>>>>>> dabbe66555fcbed9fef58f344a50295a3e1f82f8
 then
 	correct_ip="true"
 else
@@ -234,12 +239,21 @@ case $format in
         ;;
 esac
 }
+<<<<<<< HEAD
 
 while [ "${correct_form}" = "false" ];
 do
         validate_form;
 done
 
+=======
+
+while [ "${correct_form}" = "false" ];
+do
+        validate_form;
+done
+
+>>>>>>> dabbe66555fcbed9fef58f344a50295a3e1f82f8
 payload=""
 msfgen=""
 
@@ -269,6 +283,11 @@ case  $meterpreter  in
 esac
 
 echo "msfvenom -p $msfgen"
+<<<<<<< HEAD
 
 msfvenom -p $msfgen > ${filename}.${format}
 
+=======
+
+msfvenom -p $msfgen > ${filename}.${format}
+>>>>>>> dabbe66555fcbed9fef58f344a50295a3e1f82f8
