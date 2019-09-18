@@ -1,5 +1,4 @@
 #!/bin/bash
-
 #A script that creates a wrapper around MSFvenom and allows for easier payload generation.
 
 validate_os(){
