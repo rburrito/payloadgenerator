@@ -128,6 +128,7 @@ validate_shell
 
 #Functions to ask user for IP address and validates correct IP.
 correct_ip="false"
+
 check_ip(){
 octet="(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])"
 if [[ $ip =~ ^$octet.$octet.$octet.$octet$ ]];
@@ -164,8 +165,12 @@ do
 	check_port;
 done
 }
+<<<<<<< HEAD
 
 #Case questions for users that want bind or reverse shells
+=======
+#############################################################################
+>>>>>>> c202b559235f9c84538399e0b57caaa6eaac626c
 ip_port=""
 
 case $shell in
@@ -245,3 +250,4 @@ echo "msfvenom -p $msfgen"
 
 #Calls msfvenom directly and generates an output file.
 msfvenom -p $msfgen > ${filename}.${format}
+
