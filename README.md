@@ -18,5 +18,3 @@ Required input from the user:
 * Format: exe, raw, pl, rb, c, elf
 * Name of your generated payload file
  
-We also included Advanced Options:  
-* Do you want to encode your payload ( to avoid anti-virus )
