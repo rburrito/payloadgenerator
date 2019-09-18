@@ -75,6 +75,7 @@ while [ "${correct_meterpreter}" = "false" ];
 do
         validate_meterpreter;
 done
+
 }
 
 linux_x86_meterpreter(){
@@ -111,6 +112,7 @@ do
 done
 
 stage_symbol=""
+
 case $stage in
 	1)
 		stage_symbol="/"
@@ -126,6 +128,7 @@ case $architecture in
 		no_arc_display
 		linux_x86_meterpreter
 	;;
+
 	64)
 		arc="/x64"
 		meterpreter_question
