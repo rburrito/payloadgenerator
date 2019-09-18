@@ -156,6 +156,27 @@ do
         validate_shell;
 done
 
+##################################################################
+correct_ip="false"
+check_ip(){
+if [[ $ip =~ [0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3} ]];
+then
+	correct_ip="true"
+else
+	echo "$ip is not a valid IP address. Please enter a valid IP address."
+	read ip
+fi
+}
+
+find_correct_ip(){
+while [ "$correct_ip" = "false" ];
+do 
+	check_ip
+done
+}
+##################################################################
+
+
 correct_port="false"
 check_port() {
 if [[ $port -gt 65535 ]] || [[ $port -lt 1 ]];
@@ -176,11 +197,13 @@ done
 
 
 ip_port=""
+
 case $shell in
   reverse)
    	echo "Please enter your IP address."
         read ip
-
+	check_ip
+	find_correct_ip
         echo "Please enter the port you would like to listen on."
         read port
 	check_port
@@ -190,6 +213,8 @@ case $shell in
   bind)
         echo "Please enter your target's IP address."
 	read ip
+	check_ip
+        find_correct_ip
 	echo "Please enter the port you want your target to listen on."
         read port
 	check_port
