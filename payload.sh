@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#A script that creates a wrapper around MSFvenom and allows for easier payload generation.
 echo "What is the operating system of your target? Example: windows, linux, osx"
 read OS
 
