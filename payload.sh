@@ -32,6 +32,7 @@ esac
 }
 
 validate_arc
+
 #Sets arc to "" for Windows 32 bit.
 no_arc_display(){
 case $OS in
@@ -210,7 +211,6 @@ esac
 validate_form
 
 #Asks user for desired filename.
-
 echo "What would you like to name the file?"
 read filename
 
