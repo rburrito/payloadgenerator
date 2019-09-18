@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#A script that creates a wrapper around MSFvenom and allows for easier payload generation.
 echo "What is the operating system of your target? Example: windows, linux, osx"
 read OS
 
@@ -153,6 +154,24 @@ do
         validate_shell;
 done
 
+correct_ip="false"
+check_ip(){
+if [[ $ip =~ (25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?) ]];
+then
+	correct_ip="true"
+else
+	echo "$ip is not a valid IP address. Please enter a valid IP address."
+	read ip
+fi
+}
+
+find_correct_ip(){
+while [ "$correct_ip" = "false" ];
+do
+	check_ip
+done
+}
+
 correct_port="false"
 check_port() {
 if [[ $port -gt 65535 ]] || [[ $port -lt 1 ]];
@@ -172,11 +191,13 @@ done
 }
 
 ip_port=""
+
 case $shell in
   reverse)
    	echo "Please enter your IP address."
         read ip
-
+	check_ip
+	find_correct_ip
         echo "Please enter the port you would like to listen on."
         read port
 	check_port
@@ -186,6 +207,8 @@ case $shell in
   bind)
         echo "Please enter your target's IP address."
 	read ip
+	check_ip
+        find_correct_ip
 	echo "Please enter the port you want your target to listen on."
         read port
 	check_port
