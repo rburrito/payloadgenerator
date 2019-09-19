@@ -138,7 +138,8 @@ correct_ip="false"
 
 check_ip(){
 octet="(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])"
-if [[ $ip =~ ^$octet.$octet.$octet.$octet$ ]];
+ip_regex="^$octet\.$octet\.$octet\.$octet$"
+if [[ $ip =~ $ip_regex ]];
 then
 	correct_ip="true"
 else
