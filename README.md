@@ -1,9 +1,9 @@
-# Payload Generator
-Payload Generator is a tool to generate the most common Meterpreter payloads via MSFvenom, part of the Metasploit framework.
+# AutoPayload
+AutoPayload is a tool to generate the most common Meterpreter payloads via MSFvenom, part of the Metasploit framework.
 About
 
 # About
-Payload Generator is a wrapper around MSFvenom that provides a more user friendly experience to generate multiple types of payloads. Our intent is to make user experience as uncomplicated as possible to produce a payload. Instead of users going through MSFvenom manually looking for a specific payload, our goal is to automate the process for them while customizing the payload generating experience. Payload Generator asks users questions defining their target and calls msfvenom directly to generate a payload.
+AutoPayload is a wrapper around MSFvenom that provides a more user friendly experience to generate multiple types of payloads. Our intent is to make user experience as uncomplicated as possible to produce a payload. Instead of users going through MSFvenom manually looking for a specific payload, our goal is to automate the process for them while customizing the payload generating experience. Payload Generator asks users questions defining their target and calls msfvenom directly to generate a payload.
 
 Required input from the user:
 
