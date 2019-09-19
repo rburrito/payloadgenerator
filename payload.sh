@@ -2,6 +2,9 @@
 #!/bin/bash
 #A script that creates a wrapper around MSFvenom and allows for easier payload generation.
 
+file="cool_characters.txt"
+cat $file
+
 #Asks user for target operating system and validates entry.
 validate_os(){
 echo "What is the target of your operating system? Example: windows, linux, osx"
@@ -168,7 +171,6 @@ do
 	check_port;
 done
 }
-
 
 #Case questions for users that want bind or reverse shells
 ip_port=""
