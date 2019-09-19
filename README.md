@@ -4,8 +4,8 @@ Paymaker is a tool to generate the most common Meterpreter payloads via MSFvenom
  
 
 # About
-Paymaker is a wrapper around MSFvenom which gives the users a more friendly and simpler experience to generate multiple types of payloads, based on their choice. Our intent is to make the experience uncomplicated to produce their payload.
-Instead of the user going through MSFvenom manually looking for a specific payload our goal is to automate the process for them as well as customizing the payload generating experience (or customize the payload for their needs.)  We will ask the user certain questions defining their target and then call msfvenom to generate a payload according to the answers that are given.
+Payload Generator is a wrapper around MSFvenom which gives the users a more friendly and simpler experience to generate multiple types of payloads, based on their choice. Our intent is to make the experience uncomplicated to produce their payload.
+Instead of users going through MSFvenom manually looking for a specific payload, our goal is to automate the process for them as well as customizing the payload generating experience (or customize the payload for their needs).  We will ask the user questions defining their target and call msfvenom to generate a payload based on user responses.
  
 Required input from the user: 
 * Platform: Windows, Linux, OSX
