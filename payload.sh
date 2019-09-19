@@ -274,7 +274,6 @@ else
         echo "$iteration is not a valid number"
         validate_iteration
 fi
-
 }
 
 validate_iteration
