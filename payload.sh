@@ -33,6 +33,7 @@ esac
 }
 
 validate_arc
+
 #Sets arc to "" for Windows 32 bit.
 
 no_arc_display(){
@@ -256,6 +257,7 @@ esac
 }
 
 encoder_question
+
 #Asks user for desired filename.
 echo "What would you like to name the file?"
 read filename
