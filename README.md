@@ -1,4 +1,4 @@
-# MSFvenom Paymaker
+# Payload Generator
  
 Payload Generator is a tool to generate the most common Meterpreter payloads via MSFvenom, part of the Metasploit framework.
  
