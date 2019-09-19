@@ -2,7 +2,7 @@
 #!/bin/bash
 #A script that creates a wrapper around MSFvenom and allows for easier payload generation.
 
-file="cool_characters.txt"
+file="payload_sign.txt"
 cat $file
 
 #Asks user for target operating system and validates entry.
