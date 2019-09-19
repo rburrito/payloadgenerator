@@ -17,4 +17,4 @@ Required input from the user:
 * Type: Staged or Stageless
 * Format: exe, raw, pl, rb, c, elf
 * Name of your generated payload file
- 
+* Includes an encoding option to evade antivirus detection. 
