@@ -276,6 +276,7 @@ else
 fi
 }
 
+#Asks user the validate_iteration question only if they want to encode the payload.
 case $enc_question in
         y)
         validate_iteration
