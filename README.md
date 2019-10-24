@@ -13,6 +13,6 @@ Required input from the user:
     If it is a bind shell: Target IP and port
     Meterpreter: y or n
     Type: Staged or Stageless
-    Format: exe, raw, pl, rb, c, elf
+    Format: exe, raw, pl, rb, c, elf, asp, aspx
     Name of your generated payload file
     Includes an encoding option to evade antivirus detection.
