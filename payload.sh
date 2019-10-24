@@ -203,10 +203,10 @@ esac
 
 #Asks user to input file format and validates input.
 validate_form(){
-echo "What would you like the file format to be? Example: exe, raw, pl, rb, c, elf, asp"
+echo "What would you like the file format to be? Example: exe, raw, pl, rb, c, elf, asp, aspx"
 read format
 case $format in 
-	exe|raw|pl|rb|c|elf|asp)
+	exe|raw|pl|rb|c|elf|asp|aspx)
 	;;
 	*)
 	echo "$format is not one of the options."
