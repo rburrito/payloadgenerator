@@ -38,7 +38,6 @@ esac
 validate_arc
 
 #Sets arc to "" for Windows 32 bit.
-
 no_arc_display(){
 case $OS in
         windows)
