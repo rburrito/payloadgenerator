@@ -276,7 +276,14 @@ else
 fi
 }
 
-validate_iteration
+case $enc_question in
+        y)
+        validate_iteration
+        ;;
+        n)
+        ;;
+        *)
+esac
 
 #Asks user for desired filename.
 echo "What would you like to name the file?"
