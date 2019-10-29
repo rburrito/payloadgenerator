@@ -15,13 +15,13 @@ fi
 
 #Asks user for target operating system and validates entry.
 validate_os(){
-echo "${cyn}What is the target of your operating system? Example: windows, linux, osx"
+echo "${cyn}What is the target of your operating system/platform? Example: windows, linux, osx, android, solaris, apple_ios"
 read OS
 case  $OS in 
-        windows|linux|osx)
+        windows|linux|osx|android|solaris|apple_ios|bsd|netbsd|firefox|freebsd|openbsd|php|python|ruby|java|r|ruby|unix|aix|cisco|hardware|hpux|mainframe|juniper|javascript|multi|nodejs|irix|bsdi)
         ;;
         *)
-        echo "${mag}${OS} is not one of the options. Please enter windows, linux, or osx."
+        echo "${mag}${OS} is not one of the options. Please enter your target operating system/platform."
         validate_os
         ;;
 esac
