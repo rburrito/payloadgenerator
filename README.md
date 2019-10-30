@@ -6,13 +6,13 @@ PGen is a wrapper around MSFvenom that provides a more user friendly experience 
  
 Required input from the user:
 
-    Platform: Windows, Linux, OSX
+    Platforms: windows, linux, osx, android, solaris, apple_ios, bsd, netbsd, firefox, freebsd, openbsd, php, python, ruby, java, r, ruby, unix, aix, cisco, hardware, hpux, mainframe, juniper, javascript, multi, nodejs, irix, bsdi
     Architecture: 64 bit or 32 bit
     Shell: Bind or reverse
     If it is a reverse shell: Your IP and the port you want to listen on
     If it is a bind shell: Target IP and port
     Meterpreter: y or n
     Type: Staged or Stageless
-    Format: exe, raw, pl, rb, c, elf, asp, aspx
+    Format    
     Name of your generated payload file
     Includes an encoding option to evade antivirus detection.
