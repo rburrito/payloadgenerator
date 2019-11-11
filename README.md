@@ -15,3 +15,4 @@ PGen is a wrapper around MSFvenom that provides a more user friendly experience 
  6. Formats: exe, raw, pl, rb, c, elf, asp, aspx, aspx-exe, php, macho, jsp, war, py, ps1, sh, vbscript, js_le, js_be, java, hex, msi, psh, vbs, dll
  7. Name of your generated payload file
  8. Includes an encoding option to evade antivirus detection.
+ 9. Specify bad characters.
