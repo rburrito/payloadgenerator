@@ -226,30 +226,6 @@ esac
 
 validate_form
 
-#Asks user the type of encoder they would like to use. 
-validate_encoding(){
-echo "${red}Which encoder would you like? Please specify 1 for x86/shikata_ga_nai, 2 for ruby/base64, 3 for cmd/powershell_base64, 4 for x64/xor."
-read enc_format
-case $enc_format in 
-	1)
-	enc_format="-e x86/shikata_ga_nai"
-	;;
-	2)
-	enc_format="-e ruby/base64"
-	;;
-	3)
-	enc_format="-e cmd/powershell_base64"
-	;;
-	4)
-	enc_format="-e x64/xor"
-	;;
-	*)
-	echo "${mag}${enc_format} is not an option listed."
-	validate_encoding
-	;;
-esac
-}
-
 check_bad_chars()
 {
         echo "Please enter the bad characters."
@@ -280,6 +256,32 @@ case $bad_char in
         echo "$bad_char is not one of the options."
         bad_characters_question
         ;;
+esac
+}
+
+bad_characters_question
+
+#Asks user the type of encoder they would like to use. 
+validate_encoding(){
+echo "${red}Which encoder would you like? Please specify 1 for x86/shikata_ga_nai, 2 for ruby/base64, 3 for cmd/powershell_base64, 4 for x64/xor."
+read enc_format
+case $enc_format in 
+	1)
+	enc_format="-e x86/shikata_ga_nai"
+	;;
+	2)
+	enc_format="-e ruby/base64"
+	;;
+	3)
+	enc_format="-e cmd/powershell_base64"
+	;;
+	4)
+	enc_format="-e x64/xor"
+	;;
+	*)
+	echo "${mag}${enc_format} is not an option listed."
+	validate_encoding
+	;;
 esac
 }
 
