@@ -228,7 +228,7 @@ validate_form
 
 check_bad_chars()
 {
-        echo "Please enter the bad characters."
+        echo "${grn}Please enter the bad characters."
         read -r bad_char_check
         encode_regex='^(\\x[a-f0-9]{2})+$'
 
@@ -244,7 +244,7 @@ check_bad_chars()
 }
 
 bad_characters_question(){
-echo "Would you like to check for bad characters? Enter y for yes or n for no."
+echo "${cyn}Would you like to check for bad characters? Enter y for yes or n for no."
 read bad_char
 case $bad_char in
         y)
