@@ -226,6 +226,7 @@ esac
 
 validate_form
 
+#Checks that bad characters are formatted correctly.
 check_bad_chars()
 {
         echo "${grn}Please enter the bad characters."
@@ -243,6 +244,7 @@ check_bad_chars()
 
 }
 
+#Asks user if they want to remove bad characters.
 bad_characters_question(){
 echo "${cyn}Would you like to check for bad characters? Enter y for yes or n for no."
 read bad_char
